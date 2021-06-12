@@ -34,7 +34,7 @@ const Inventory: React.FC=(props) =>{
             </div>
             <div>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={()=>{inventoryContext.removeInventory(inventory.id)}}>Delete</button>
             </div>
             <hr/>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getInventories } from '../api/InventoryApi';
+import { getInventories, removeInventories } from '../api/InventoryApi';
 import InventoryItem from '../Models/inventoryItem';
 
 type InventoryContextObj = {
@@ -40,8 +40,10 @@ const InventoriesContextProvider: React.FC = (props) => {
         
     }
 
-    const removeInventoryHandler = (id: number)=>{
-
+    const removeInventoryHandler = async (id: number)=>{
+        const allInventories = await removeInventories(id);
+        if(allInventories.data)
+            setInventories(allInventories.data);
     }
 
     const updateInventoryHandler = (updatedInventory: InventoryItem, id: number)=>{
