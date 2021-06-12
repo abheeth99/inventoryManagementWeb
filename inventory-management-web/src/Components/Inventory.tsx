@@ -4,6 +4,7 @@ import { InventoryContext } from '../Store/inventory-context';
 const Inventory: React.FC=(props) =>{
 
     const inventoryContext = useContext(InventoryContext);
+    
     if(inventoryContext.inventories){
         return inventoryContext?.inventories?.map((inventory : any, index: number)=>(
                 <div key={inventory.id}>
