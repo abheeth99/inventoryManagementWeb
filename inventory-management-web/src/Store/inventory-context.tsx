@@ -8,7 +8,7 @@ type InventoryContextObj = {
     setReorderLevel: (id: number) => void;
     removeInventory: (id: number) => void;
     updateInventory: (updatedInventory: InventoryItem, id: number) => void;
-    getInventoryToUpdate: (id: number) => any;
+    getInventoryToUpdate: (id: number) => Promise<InventoryItem>;
 }
 
 export const InventoryContext = React.createContext<InventoryContextObj>({
@@ -17,7 +17,7 @@ export const InventoryContext = React.createContext<InventoryContextObj>({
     setReorderLevel: (id: number) => { },
     removeInventory: (id: number) => { },
     updateInventory: (updatedInventory: InventoryItem, id: number) => { },
-    getInventoryToUpdate: (id: number) => {}
+    getInventoryToUpdate: (id: number) => InventoryItem as any // Todo: remove any
 });
 
 const InventoriesContextProvider: React.FC = (props) => {
@@ -25,12 +25,11 @@ const InventoriesContextProvider: React.FC = (props) => {
     const [inventories, setInventories] = useState<InventoryItem[]>([]);
 
     useEffect(() => {
-        const getAllInventories = async () => {
+        (async function(){
             const allInventories = await getInventories();
             if(allInventories.data)
                 setInventories(allInventories.data);
-        };
-        getAllInventories();
+        })();
     }, [])
 
 
