@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { addInventory, getInventories, removeInventories, updateInventory } from '../api/InventoryApi';
+import { addInventory, getInventories, getInventoryById, removeInventories, updateInventory } from '../api/InventoryApi';
 import InventoryItem from '../Models/inventoryItem';
 
 type InventoryContextObj = {
@@ -8,6 +8,7 @@ type InventoryContextObj = {
     setReorderLevel: (id: number) => void;
     removeInventory: (id: number) => void;
     updateInventory: (updatedInventory: InventoryItem, id: number) => void;
+    getInventoryToUpdate: (id: number) => any;
 }
 
 export const InventoryContext = React.createContext<InventoryContextObj>({
@@ -16,6 +17,7 @@ export const InventoryContext = React.createContext<InventoryContextObj>({
     setReorderLevel: (id: number) => { },
     removeInventory: (id: number) => { },
     updateInventory: (updatedInventory: InventoryItem, id: number) => { },
+    getInventoryToUpdate: (id: number) => {}
 });
 
 const InventoriesContextProvider: React.FC = (props) => {
@@ -62,12 +64,18 @@ const InventoriesContextProvider: React.FC = (props) => {
         }
     }
 
+    const getInventoryToUpdateHandler = async (id: number)=>{
+        const inventoryToUpdate = await getInventoryById(id);
+        return inventoryToUpdate.data
+    }
+
     const contextValue: InventoryContextObj = {
         inventories: inventories,
         addInventory: addInventoryHandler,
         setReorderLevel: setReorderLevelHandler,
         removeInventory: removeInventoryHandler,
-        updateInventory: updateInventoryHandler
+        updateInventory: updateInventoryHandler,
+        getInventoryToUpdate: getInventoryToUpdateHandler
     };
 
     return(

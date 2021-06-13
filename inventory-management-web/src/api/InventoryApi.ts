@@ -30,3 +30,7 @@ export const updateInventory = (newInventory: InventoryItem):Promise<ServiceResp
         body: JSON.stringify(newInventory),
     }).then(res => res.json())
 }
+
+export const getInventoryById = (id: number):Promise<ServiceResponse<InventoryItem>> =>{
+    return fetch("https://localhost:44368/inventory/"+ id).then(res => res.json())
+}

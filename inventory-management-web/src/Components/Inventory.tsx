@@ -25,7 +25,7 @@ const Inventory: React.FC=(props) =>{
 
     // When editing a Inventory
     if(edit.id){
-        return <InventoryForm onSubmit={handleUpdateSubmit}/>
+        return <InventoryForm onSubmit={handleUpdateSubmit} inventoryToEditId={edit.id}/>
     }
 
     return inventoryContext.inventories.map((inventory : any, index: number)=>(
