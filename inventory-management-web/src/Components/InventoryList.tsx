@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { InventoryContext } from '../Store/inventory-context';
 import Inventory from './Inventory';
+import InventoryForm from './InventoryForm';
 
 function InventoryList() {
     
@@ -9,6 +10,7 @@ function InventoryList() {
     return (
         <div>
             <h1>Inventory List</h1>
+            <InventoryForm onSubmit={inventoryContext.addInventory}/>
             <Inventory/>
         </div>
     )

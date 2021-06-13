@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getInventories, removeInventories } from '../api/InventoryApi';
+import { addInventory, getInventories, removeInventories, updateInventory } from '../api/InventoryApi';
 import InventoryItem from '../Models/inventoryItem';
 
 type InventoryContextObj = {
@@ -32,8 +32,10 @@ const InventoriesContextProvider: React.FC = (props) => {
     }, [])
 
 
-    const addInventoryHandler = (newInventory: InventoryItem)=>{
-
+    const addInventoryHandler = async (newInventory: InventoryItem)=>{
+        const allInventories = await addInventory(newInventory);
+        if(allInventories.data)
+            setInventories(allInventories.data);
     }
 
     const setReorderLevelHandler = (id: number)=>{
@@ -46,8 +48,18 @@ const InventoriesContextProvider: React.FC = (props) => {
             setInventories(allInventories.data);
     }
 
-    const updateInventoryHandler = (updatedInventory: InventoryItem, id: number)=>{
-        
+    const updateInventoryHandler = async (updatedInventory: InventoryItem, id: number)=>{
+        updatedInventory.id = id;
+        const updatedInventoryItem = await updateInventory(updatedInventory);
+        if(updatedInventoryItem.data){
+            let updatedInventories = inventories.map(inventory=>{
+                if(inventory.id === id){
+                    inventory = updatedInventory;
+                }
+                return inventory;
+            })
+            setInventories(updatedInventories);
+        }
     }
 
     const contextValue: InventoryContextObj = {
