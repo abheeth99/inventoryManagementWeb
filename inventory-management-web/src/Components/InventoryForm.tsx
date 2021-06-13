@@ -53,7 +53,7 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                         Units Count :
                     </td>
                     <td>
-                        <input type="text" placeholder="Inventory Name" value={inventoryItem.name} name='name' onChange={handleChange}/>
+                        <input type="text" placeholder="Units Count" value={inventoryItem.unitsCount} name='unitsCount' onChange={handleChange}/>
                     </td>
 
                 </tr>
