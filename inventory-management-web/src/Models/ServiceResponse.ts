@@ -1,5 +1,3 @@
-import { reorderLevel } from "./Enum";
-
 export class ServiceResponse<T>{
     data: T ;
     success: Boolean;

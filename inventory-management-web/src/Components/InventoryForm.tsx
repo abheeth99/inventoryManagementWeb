@@ -9,7 +9,6 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
     const inventoryContext = useContext(InventoryContext);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
-        debugger;
         const value = event.target.value;
 
         setInventoryItem({

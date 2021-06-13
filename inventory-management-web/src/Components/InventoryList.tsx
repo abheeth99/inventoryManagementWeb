@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { InventoryContext } from '../Store/inventory-context';
 import Inventory from './Inventory';
 import InventoryForm from './InventoryForm';
