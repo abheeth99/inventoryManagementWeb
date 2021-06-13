@@ -32,19 +32,21 @@ const Inventory: React.FC=(props) =>{
         <div key={index}>
             <div>
                 <div>
-                    Name : {inventory.name}
+                    {/* Name :  */}
+                    {inventory.name}
                 </div>
 
-                <div>
+                {/* <div>
                     Units Count : {inventory.unitsCount}
                 </div>
 
                 <div>
                     Unit Price : {inventory.unitPrice}
-                </div>
+                </div> */}
 
                 <div>
-                    Reorder Level : {inventory.reorderLevel == '0' ? '🟢': inventory.reorderLevel == '1' ? '🟡' : '🔴'}
+                    {/* Reorder Level :  */}
+                    {inventory.reorderLevel == '0' ? '🟢': inventory.reorderLevel == '1' ? '🟡' : '🔴'}
                 </div>
             </div>
             <div>
