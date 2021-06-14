@@ -75,11 +75,11 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                     </td>
                     <td>
                         🟢
-                        <input type="radio" placeholder="Low" checked={inventoryItem.reorderLevel === reorderLevel.low} value={reorderLevel.low} name='reorderLevel' onChange={handleChange}/>
+                        <input type="radio" placeholder="Low" checked={inventoryItem.reorderLevel == reorderLevel.low} value={reorderLevel.low} name='reorderLevel' onChange={handleChange}/>
                         🟡
-                        <input type="radio" placeholder="Medium" checked={inventoryItem.reorderLevel === reorderLevel.medium} value={reorderLevel.medium} name='reorderLevel' onChange={handleChange}/>
+                        <input type="radio" placeholder="Medium" checked={inventoryItem.reorderLevel == reorderLevel.medium} value={reorderLevel.medium} name='reorderLevel' onChange={handleChange}/>
                         🔴
-                        <input type="radio" placeholder="Critical" checked={inventoryItem.reorderLevel === reorderLevel.critical} value={reorderLevel.critical} name='reorderLevel' onChange={handleChange}/> 
+                        <input type="radio" placeholder="Critical" checked={inventoryItem.reorderLevel == reorderLevel.critical} value={reorderLevel.critical} name='reorderLevel' onChange={handleChange}/> 
                     </td>
 
                 </tr>
