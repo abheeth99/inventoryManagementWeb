@@ -32,7 +32,6 @@ const InventoriesContextProvider: React.FC = (props) => {
         })();
     }, [])
 
-
     const addInventoryHandler = async (newInventory: InventoryItem)=>{
         const allInventories = await addInventory(newInventory);
         if(allInventories.data)

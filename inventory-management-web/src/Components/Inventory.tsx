@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { reorderLevel } from '../Models/Enum';
 import InventoryItem from '../Models/inventoryItem';
 import { InventoryContext } from '../Store/inventory-context';
 import InventoryForm from './InventoryForm';
@@ -46,7 +47,7 @@ const Inventory: React.FC=(props) =>{
 
                 <div>
                     {/* Reorder Level :  */}
-                    {inventory.reorderLevel == '0' ? '🟢': inventory.reorderLevel == '1' ? '🟡' : '🔴'}
+                    {inventory.reorderLevel ===  reorderLevel.low ? '🟢': inventory.reorderLevel === reorderLevel.medium ? '🟡' : '🔴'}
                 </div>
             </div>
             <div>

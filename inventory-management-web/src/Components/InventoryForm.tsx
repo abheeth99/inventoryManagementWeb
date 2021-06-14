@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { reorderLevel } from '../Models/Enum';
 import InventoryItem from '../Models/inventoryItem';
 import { InventoryContext } from '../Store/inventory-context';
 
@@ -37,6 +38,7 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
     return (
         <form onSubmit={handleSubmit}>
             <table>
+                <tbody>
                 <tr>
                     <td>
                         Inventory Name :
@@ -73,11 +75,11 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                     </td>
                     <td>
                         🟢
-                        <input type="radio" placeholder="Low" checked={inventoryItem.reorderLevel == 0} value={0} name='reorderLevel' onChange={handleChange}/>
+                        <input type="radio" placeholder="Low" checked={inventoryItem.reorderLevel === reorderLevel.low} value={reorderLevel.low} name='reorderLevel' onChange={handleChange}/>
                         🟡
-                        <input type="radio" placeholder="Medium" checked={inventoryItem.reorderLevel == 1} value={1} name='reorderLevel' onChange={handleChange}/>
+                        <input type="radio" placeholder="Medium" checked={inventoryItem.reorderLevel === reorderLevel.medium} value={reorderLevel.medium} name='reorderLevel' onChange={handleChange}/>
                         🔴
-                        <input type="radio" placeholder="Critical" checked={inventoryItem.reorderLevel == 2} value={2} name='reorderLevel' onChange={handleChange}/> 
+                        <input type="radio" placeholder="Critical" checked={inventoryItem.reorderLevel === reorderLevel.critical} value={reorderLevel.critical} name='reorderLevel' onChange={handleChange}/> 
                     </td>
 
                 </tr>
@@ -88,7 +90,7 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                     </td>
 
                 </tr>
-
+                </tbody>
             </table>
             <hr/>
         </form>
