@@ -98,7 +98,7 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                         value={reorderLevel.low} 
                         name='reorderLevel' 
                         onChange={handleChange}
-                        label={'🟢'}
+                        label={reorderLevel[reorderLevel.low]}
                     />
                     <Form.Check
                         inline 
@@ -108,7 +108,7 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                         value={reorderLevel.medium} 
                         name='reorderLevel' 
                         onChange={handleChange}
-                        label={'🟡'}
+                        label={reorderLevel[reorderLevel.medium]}
                     />
                     <Form.Check
                         inline 
@@ -118,7 +118,7 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                         value={reorderLevel.critical} 
                         name='reorderLevel' 
                         onChange={handleChange}
-                        label={'🔴'}
+                        label={reorderLevel[reorderLevel.critical]}
                     />
                 </Form.Group>
             </Form>

@@ -52,6 +52,7 @@ const InventoriesContextProvider: React.FC = (props) => {
         updatedInventory.id = id;
         const updatedInventoryItem = await updateInventory(updatedInventory);
         if(updatedInventoryItem.data){
+            debugger;
             let updatedInventories = inventories.map(inventory=>{
                 if(inventory.id === id){
                     inventory = updatedInventory;

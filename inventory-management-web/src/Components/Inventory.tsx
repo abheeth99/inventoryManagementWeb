@@ -47,7 +47,7 @@ const Inventory: React.FC=(props) =>{
                         <td>{inventory.name}</td>
                         <td>{inventory.unitsCount}</td>
                         <td>{inventory.unitPrice}</td>
-                        <td>{inventory.reorderLevel ===  reorderLevel.low ? '🟢': inventory.reorderLevel === reorderLevel.medium ? '🟡' : '🔴'}</td>
+                        <td>{reorderLevel[inventory.reorderLevel]}</td>
                         <td>
                             <Button size="sm" onClick={()=>{setEdit({id: inventory.id})}}>Edit</Button>
                             {' '}
