@@ -35,7 +35,6 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
 
     useEffect(() => {
         if (firstRender.current) {
-            debugger;
           firstRender.current = false
           return
         }
@@ -90,17 +89,38 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
                         Please Enter a Unit Price
                     </Form.Control.Feedback>
                 </Form.Group>
-                {/* <Form.Group>
+                <Form.Group>
                     <Form.Check
+                        inline 
+                        placeholder="Low"
+                        type='radio'
+                        checked={inventoryItem.reorderLevel == reorderLevel.low} 
+                        value={reorderLevel.low} 
+                        name='reorderLevel' 
+                        onChange={handleChange}
+                        label={'🟢'}
                     />
-                </Form.Group> */}
-                        Reorder Level :
-                        🟢
-                        <input type="radio" placeholder="Low" checked={inventoryItem.reorderLevel == reorderLevel.low} value={reorderLevel.low} name='reorderLevel' onChange={handleChange}/>
-                        🟡
-                        <input type="radio" placeholder="Medium" checked={inventoryItem.reorderLevel == reorderLevel.medium} value={reorderLevel.medium} name='reorderLevel' onChange={handleChange}/>
-                        🔴
-                        <input type="radio" placeholder="Critical" checked={inventoryItem.reorderLevel == reorderLevel.critical} value={reorderLevel.critical} name='reorderLevel' onChange={handleChange}/> 
+                    <Form.Check
+                        inline 
+                        placeholder="Medium"
+                        type='radio'
+                        checked={inventoryItem.reorderLevel == reorderLevel.medium} 
+                        value={reorderLevel.medium} 
+                        name='reorderLevel' 
+                        onChange={handleChange}
+                        label={'🟡'}
+                    />
+                    <Form.Check
+                        inline 
+                        placeholder="Critical"
+                        type='radio'
+                        checked={inventoryItem.reorderLevel == reorderLevel.critical} 
+                        value={reorderLevel.critical} 
+                        name='reorderLevel' 
+                        onChange={handleChange}
+                        label={'🔴'}
+                    />
+                </Form.Group>
             </Form>
         </Modal.Body>
             <Modal.Footer><Button disabled={formVal.disable} onClick={()=>{handleSubmit()}}>Add Inventory</Button> </Modal.Footer>
