@@ -27,7 +27,7 @@ const Inventory: React.FC=(props) =>{
 
     return (
         <> 
-        {edit.id? <InventoryForm onSubmit={handleUpdateSubmit} inventoryToEditId={edit.id}/> : null}
+        {edit.id>0? <InventoryForm onSubmit={handleUpdateSubmit} inventoryToEditId={edit.id}/> : null}
         <table className="table table-striped">
             <thead>
                 <tr>
@@ -49,9 +49,9 @@ const Inventory: React.FC=(props) =>{
                         <td>{inventory.unitPrice}</td>
                         <td>{inventory.reorderLevel ===  reorderLevel.low ? '🟢': inventory.reorderLevel === reorderLevel.medium ? '🟡' : '🔴'}</td>
                         <td>
-                            <Button onClick={()=>{setEdit({id: inventory.id})}}>Edit</Button>
-                            
-                            <Button onClick={()=>{inventoryContext.removeInventory(inventory.id)}}>Delete</Button>
+                            <Button size="sm" onClick={()=>{setEdit({id: inventory.id})}}>Edit</Button>
+                            {' '}
+                            <Button size="sm" onClick={()=>{inventoryContext.removeInventory(inventory.id)}}>Delete</Button>
                         </td>
                     </tr>
                 ))
