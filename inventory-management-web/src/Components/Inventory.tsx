@@ -3,6 +3,7 @@ import { reorderLevel } from '../Models/Enum';
 import InventoryItem from '../Models/inventoryItem';
 import { InventoryContext } from '../Store/inventory-context';
 import InventoryForm from './InventoryForm';
+import {Button} from 'react-bootstrap';
 
 const Inventory: React.FC=(props) =>{
 
@@ -24,39 +25,41 @@ const Inventory: React.FC=(props) =>{
         setEdit({id: 0})
     }
 
-    // When editing a Inventory
-    if(edit.id){
-        return <InventoryForm onSubmit={handleUpdateSubmit} inventoryToEditId={edit.id}/>
-    }
-
-    return inventoryContext.inventories.map((inventory : any, index: number)=>(
-        <div key={index}>
-            <div>
-                <div>
-                    {/* Name :  */}
-                    {inventory.name}
-                </div>
-
-                {/* <div>
-                    Units Count : {inventory.unitsCount}
-                </div>
-
-                <div>
-                    Unit Price : {inventory.unitPrice}
-                </div> */}
-
-                <div>
-                    {/* Reorder Level :  */}
-                    {inventory.reorderLevel ===  reorderLevel.low ? '🟢': inventory.reorderLevel === reorderLevel.medium ? '🟡' : '🔴'}
-                </div>
-            </div>
-            <div>
-            <button onClick={()=>{setEdit({id: inventory.id})}}>Edit</button>
-                <button onClick={()=>{inventoryContext.removeInventory(inventory.id)}}>Delete</button>
-            </div>
-            <hr/>
-        </div>
-    ));
+    return (
+        <> 
+        {edit.id? <InventoryForm onSubmit={handleUpdateSubmit} inventoryToEditId={edit.id}/> : null}
+        <table className="table table-striped">
+            <thead>
+                <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Units Count </th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Reorder Level</th>
+                <th scope="col">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+            {
+                inventoryContext.inventories.map((inventory : any, index: number)=>(
+                    <tr key={index}>
+                        <th>{inventory.id}</th>
+                        <td>{inventory.name}</td>
+                        <td>{inventory.unitsCount}</td>
+                        <td>{inventory.unitPrice}</td>
+                        <td>{inventory.reorderLevel ===  reorderLevel.low ? '🟢': inventory.reorderLevel === reorderLevel.medium ? '🟡' : '🔴'}</td>
+                        <td>
+                            <Button onClick={()=>{setEdit({id: inventory.id})}}>Edit</Button>
+                            
+                            <Button onClick={()=>{inventoryContext.removeInventory(inventory.id)}}>Delete</Button>
+                        </td>
+                    </tr>
+                ))
+            }
+            </tbody>
+        </table>
+        </>
+    )
 }
 
 export default Inventory;

@@ -1,7 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef} from 'react'
 import { reorderLevel } from '../Models/Enum';
 import InventoryItem from '../Models/inventoryItem';
 import { InventoryContext } from '../Store/inventory-context';
+import {Button, Modal, Form} from 'react-bootstrap'
+
+type FormValidationObj = {
+    disable: boolean;
+    nameErrorMessage: string;
+}
 
 const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, inventoryToEditId?: number}>=(props) =>{
 
@@ -9,19 +15,11 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
 
     const inventoryContext = useContext(InventoryContext);
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
-        const value = event.target.value;
+    const firstRender = useRef(true);
 
-        setInventoryItem({
-            ...inventoryItem,[event.target.name]: value
-        });
-    }
+    const [formVal, setFormVal] = useState<FormValidationObj>({disable: true, nameErrorMessage: 'Required'});
 
-    const handleSubmit = (event: React.FormEvent) => {
-        event.preventDefault();
-        props.onSubmit(inventoryItem);
-        setInventoryItem(new InventoryItem());
-    }
+    const [modalState, setModalState] = useState(true);
 
     useEffect(() => {
         if(props.inventoryToEditId){
@@ -35,65 +33,79 @@ const InventoryForm: React.FC<{onSubmit: (inventory:InventoryItem)=>void, invent
         }
     }, [])
 
+    useEffect(() => {
+        if (firstRender.current) {
+            debugger;
+          firstRender.current = false
+          return
+        }
+        setFormVal(validateForm())
+    }, [inventoryItem])
+
+      const handleChange = (event: React.ChangeEvent<HTMLInputElement>)=>{
+        const value = event.target.value;
+
+        setInventoryItem({
+            ...inventoryItem,[event.target.name]: value
+        });
+    }
+
+    const validateForm = () => {
+        if (inventoryItem.name === "") {
+            return {disable: true, nameErrorMessage: 'Name cant be blank!'}
+        } else {
+            return {disable: false, nameErrorMessage: ''}
+        }
+    }
+
+    const handleSubmit = () => {
+        props.onSubmit(inventoryItem);
+        setInventoryItem(new InventoryItem());
+        setModalState(!modalState);
+    }
     return (
-        <form onSubmit={handleSubmit}>
-            <table>
-                <tbody>
-                <tr>
-                    <td>
-                        Inventory Name :
-                    </td>
-                    <td>
-                        <input type="text" placeholder="Inventory Name" value={inventoryItem.name} name='name' onChange={handleChange}/>
-                    </td>
-
-                </tr>
-
-                <tr>
-                    <td>
-                        Units Count :
-                    </td>
-                    <td>
-                        <input type="text" placeholder="Units Count" value={inventoryItem.unitsCount} name='unitsCount' onChange={handleChange}/>
-                    </td>
-
-                </tr>
-
-                <tr>
-                    <td>
-                        Unit Price :
-                    </td>
-                    <td>
-                        <input type="number" placeholder="Unit Price" value={inventoryItem.unitPrice} name='unitPrice' onChange={handleChange}/>
-                    </td>
-
-                </tr>
-
-                <tr>
-                    <td>
+        <>
+        <Modal show={modalState}>
+        <Modal.Header>Add a Inventory to the list</Modal.Header>
+        <Modal.Body>
+            <Form noValidate validated={true}>
+                <Form.Group>
+                    <Form.Label>Inventory Name</Form.Label>
+                    <Form.Control required type="text" placeholder="Inventory Name" value={inventoryItem.name} name='name' onChange={handleChange}/>
+                    <Form.Control.Feedback type="invalid">
+                        Please Enter a Name
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Units Count</Form.Label>
+                    <Form.Control required type="number" placeholder="Units Count" value={inventoryItem.unitsCount} name='unitsCount' onChange={handleChange}/>
+                    <Form.Control.Feedback type="invalid">
+                        Please Enter a Units Count
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group>
+                    <Form.Label>Unit Price</Form.Label>
+                    <Form.Control required type="number" placeholder="Unit Price" value={inventoryItem.unitPrice} name='unitPrice' onChange={handleChange}/>
+                    <Form.Control.Feedback type="invalid">
+                        Please Enter a Unit Price
+                    </Form.Control.Feedback>
+                </Form.Group>
+                {/* <Form.Group>
+                    <Form.Check
+                    />
+                </Form.Group> */}
                         Reorder Level :
-                    </td>
-                    <td>
                         🟢
                         <input type="radio" placeholder="Low" checked={inventoryItem.reorderLevel == reorderLevel.low} value={reorderLevel.low} name='reorderLevel' onChange={handleChange}/>
                         🟡
                         <input type="radio" placeholder="Medium" checked={inventoryItem.reorderLevel == reorderLevel.medium} value={reorderLevel.medium} name='reorderLevel' onChange={handleChange}/>
                         🔴
                         <input type="radio" placeholder="Critical" checked={inventoryItem.reorderLevel == reorderLevel.critical} value={reorderLevel.critical} name='reorderLevel' onChange={handleChange}/> 
-                    </td>
-
-                </tr>
-
-                <tr>
-                    <td>
-                        <button>Add Inventory</button> 
-                    </td>
-
-                </tr>
-                </tbody>
-            </table>
-            <hr/>
-        </form>
+            </Form>
+        </Modal.Body>
+            <Modal.Footer><Button disabled={formVal.disable} onClick={()=>{handleSubmit()}}>Add Inventory</Button> </Modal.Footer>
+        </Modal>
+        </>
 
     )
 }
