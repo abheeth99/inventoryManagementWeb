@@ -13,16 +13,26 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const messaging = firebase.messaging();
 
-export const getToken = (setTokenFound: any) => {
-  return messaging.getToken({vapidKey: 'BJf4ewxuRrREBzFzoQtllqs2T9F-MU-IGeWwtWqKPn1B-XvVmlJ3ZgnJ_UC6SeUadbpS_Ej-rIge0rawinRvb7k'}).then((currentToken) => {
+export const requestPermission = () => {
+  return messaging.requestPermission().
+    then(() => {
+      getToken();
+    }).catch((err) => {
+      console.log("Permission not granted!!", err)
+    })
+
+}
+
+const getToken = () => {
+  messaging.getToken({ vapidKey: 'BJf4ewxuRrREBzFzoQtllqs2T9F-MU-IGeWwtWqKPn1B-XvVmlJ3ZgnJ_UC6SeUadbpS_Ej-rIge0rawinRvb7k' }).then((currentToken) => {
     if (currentToken) {
       console.log('current token for client: ', currentToken);
-      setTokenFound(true);
+      //setTokenFound(true);
       // Track the token -> client mapping, by sending to backend server
       // show on the UI that permission is secured
     } else {
       console.log('No registration token available. Request permission to generate one.');
-      setTokenFound(false);
+      //setTokenFound(false);
       // shows on the UI that permission is required 
     }
   }).catch((err) => {
@@ -31,9 +41,9 @@ export const getToken = (setTokenFound: any) => {
   });
 }
 
-export const onMessageListener = () =>
+export const getPayload = () =>
   new Promise((resolve) => {
     messaging.onMessage((payload) => {
       resolve(payload);
     });
-});
+  });
