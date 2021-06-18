@@ -38,7 +38,7 @@ function App() {
         {!isTokenFound && <h1> Need notification permission ❗️ </h1>}
         <img src={logo} className="App-logo" alt="logo" />       
       </header>
-      <NotificationPopup text={notification}/>
+      {/* <NotificationPopup text={notification}/> */}
     </div>
   );
 }

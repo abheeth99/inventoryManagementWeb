@@ -4,13 +4,14 @@ import NotificationPopup from "./Component/NotificationPopup";
 import FirebaseService, { getPayload } from "./Service/FirebaseService-Class";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import MessagePayload from "./Model/MessagePayload";
+import Inventory from "./Model/Inventory";
 
 
 export default class App2 extends React.Component {
 
     state = {
-        title : "",
-        body : "",
+        messagePayload: new MessagePayload<Inventory>(),
         isPermissionGranted : false
     }  
 
@@ -18,15 +19,22 @@ export default class App2 extends React.Component {
         try {
             const firebasePermission = await new FirebaseService().grantFirebasePermission();
             this.setState({ isPermissionGranted: firebasePermission })
-            debugger;
         } catch (error) {
             console.log("Permission grant issue", error)
         }
     }    
 
     componentDidUpdate() {
-        getPayload().then((payload: any) => {
-             this.setState({ title: payload.notification.title, body: payload.notification.body });
+      getPayload().then((payload: any) => {
+            console.log(payload)
+             
+            let InventoryData = JSON.parse(payload.data.Inventory);
+            let newMessagePayload = new MessagePayload<Inventory>();
+            
+            newMessagePayload.notification = payload.notification;
+            newMessagePayload.data = InventoryData;
+
+            this.setState({ messagePayload:  newMessagePayload});
             
         }).catch((err: any) => console.log('failed: ', err));
     }
@@ -37,9 +45,8 @@ export default class App2 extends React.Component {
         <header className="App-header">
           {this.state.isPermissionGranted && <h1> Notification permission enabled 👍🏻 </h1>}
           {!this.state.isPermissionGranted && <h1> Need notification permission ❗️ </h1>}
-          <img src={logo} className="App-logo" alt="logo" />
         </header>
-        {this.state.isPermissionGranted && <NotificationPopup text={this.state}/>}
+        {this.state.isPermissionGranted && <NotificationPopup message={this.state.messagePayload}/>}
       </div>
     )
 }

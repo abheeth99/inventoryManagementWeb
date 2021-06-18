@@ -1,17 +1,18 @@
 import { reorderLevel } from "../Enum/enum";
-
 export class InventoryItem{
-    id: number;
-    name: string;
-    unitsCount: number;
-    unitPrice: number;
-    reorderLevel: reorderLevel; 
+    Id: number;
+    Name: string;
+    UnitsCount: number;
+    UnitPrice: number;
+    ReorderLevel: reorderLevel; 
     
     constructor() {
-        this.id= 0;
-        this.name = "";
-        this.unitsCount = 0;
-        this.unitPrice = 0;
-        this.reorderLevel = reorderLevel.low;
+        this.Id= 0;
+        this.Name = "";
+        this.UnitsCount = 0;
+        this.UnitPrice = 0;
+        this.ReorderLevel = reorderLevel.low;
     }
 }
+
+export default InventoryItem;

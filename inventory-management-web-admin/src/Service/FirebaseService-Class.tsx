@@ -1,5 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/messaging';
+import { setToken } from '../api/TokenApi';
+import Utility from '../Model/Utility';
 
 export default class FirebaseService {
 
@@ -33,10 +35,19 @@ export default class FirebaseService {
     }
 
     generateToken = () => {
-        debugger;
         firebase.messaging().getToken({ vapidKey: this.firebaseConfig.vapidKey }).then((currentToken: string) => {
             if (currentToken) {
                 console.log('current token for client: ', currentToken);
+
+                (async function(){
+                    const utilityToken = new Utility();
+                    utilityToken.Name = "Token";
+                    utilityToken.Value = currentToken;
+          
+                    const tokenResponse =await setToken(utilityToken);
+                    console.log("tokenResponse", tokenResponse);
+                })();
+
                 //this.getPayload();
             } else {
                 console.log('No registration token available. Request permission to generate one.');
@@ -51,7 +62,6 @@ export default class FirebaseService {
 export const getPayload = () =>
     new Promise((resolve) => {
         firebase.messaging().onMessage((payload) => {
-            debugger;
             resolve(payload);
         });
     });

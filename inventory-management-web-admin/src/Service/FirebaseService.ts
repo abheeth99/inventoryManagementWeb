@@ -39,7 +39,6 @@ const getToken = () => {
       console.log('current token for client: ', currentToken);
      
       (async function(){
-          debugger;
           const utilityToken = new Utility();
           utilityToken.Name = "Token";
           utilityToken.Value = currentToken;

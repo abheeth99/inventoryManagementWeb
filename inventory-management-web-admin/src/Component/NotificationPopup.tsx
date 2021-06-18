@@ -1,14 +1,12 @@
 
 import React from "react"
 import { Button, Form, Modal, Toast } from "react-bootstrap";
+import { reorderLevel } from "../Enum/enum";
+import Inventory from "../Model/Inventory";
+import MessagePayload from "../Model/MessagePayload";
 import { getPayload } from "../Service/FirebaseService";
 
-type notification = {
-    title : string,
-    body : string
-}
-
-export default class NotificationPopup extends React.Component<{text : notification}> {
+export default class NotificationPopup extends React.Component<{message : MessagePayload<Inventory>}> {
 
     state = {
         isDisplay : false 
@@ -31,16 +29,12 @@ export default class NotificationPopup extends React.Component<{text : notificat
         return (
             <React.Fragment>
                 <Modal show={this.state.isDisplay}>
-                    <Modal.Header>Add a Inventory to the list</Modal.Header>
+                    <Modal.Header>{this.props.message.notification.title}</Modal.Header>
                     <Modal.Body>
-                        <Form noValidate validated={true}>
-                            <Form.Group>
-                                <Form.Label>{this.props.text.title}</Form.Label>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>{this.props.text.body}</Form.Label>
-                            </Form.Group>
-                        </Form>
+                        Inventory Id: {this.props.message.data.Id} <br/>
+                        Inventory Name: {this.props.message.data.Name} <br/>
+                        Inventory ReorderLevel: {reorderLevel[this.props.message.data.ReorderLevel]}
+
                     </Modal.Body>
                     <Modal.Footer><Button  onClick={()=>{this.setShow(false)}}>close</Button> </Modal.Footer>
                     {/* <Modal.Footer><Button>Add Inventory</Button>
