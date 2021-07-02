@@ -25,7 +25,6 @@ function App() {
   }, [])
   
   getPayload().then((payload: any) => {
-    debugger
     setTokenFound(true);
     setNotification({title: payload.notification.title, body: payload.notification.body})
     console.log(payload);
