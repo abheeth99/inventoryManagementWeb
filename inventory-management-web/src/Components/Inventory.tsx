@@ -15,7 +15,7 @@ const Inventory: React.FC=(props) =>{
     if(inventoryContext.inventories.length <= 0){
         return (
             <div>
-                Empty Inventories!
+                <h4>Empty Inventories!</h4>
             </div>
         )
     }
